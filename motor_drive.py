@@ -44,7 +44,7 @@ def close_all():
     GPIO.cleanup()
     sys.exit()
     
-stop_motor()
+#stop_motor()
 
 root = tk.Tk()
 
