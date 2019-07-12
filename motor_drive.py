@@ -15,7 +15,7 @@ D7 = 11 # Clockwise motor_1
 D8 = 12 # Counter-clockwise motor_1
 PWM_0 = 32 # Pulse width Modulation
 
-dc = 100 # Dutycycle for PWM (0.00 <= dc <= 100)
+dc = 100.0 # Dutycycle for PWM (0.00 <= dc <= 100)
 pwm_freq = 0.5 # PWM frequency
 
 # set up GPIO pins
@@ -47,12 +47,21 @@ def enable_motor():
     print('Motor Enabled ...')
 
 def modify_pwm():
-    global dc, dc_1
-    dc = int(dc_entry.get())
+    global dc, pwm_freq
+    
+    try:
+        dc = float(dc_entry.get()) # Copy user entry to dc variable
+    except:
+        print('Using dc value {}'.format(dc))
+    
+    try:
+        pwm_freq = float(freq_entry.get()) # Copy user entry to freq variable
+    except:
+        print('Using freq value {}'.format(pwm_freq))
+        
     pwm_signal.ChangeDutyCycle(dc)
-    print('Modifying PWM signal with Duty Cycle {}%'.format(dc))
-
-
+    pwm_signal.ChangeFrequency(pwm_freq)
+    print('Modifying PWM signal with Duty Cycle & {}% Frequency {}'.format(dc, pwm_freq))
 
 def close_all():
     print('Closing Everything')
@@ -82,11 +91,21 @@ if __name__ == "__main__":
     button_counter_clockwise = tk.Button(root,text='Rotate Counter-clockwise', width=25, command=rotate_counter_clockwise)
     button_counter_clockwise.pack()
 
-    tk.Label(root, text="Duty cycle %").pack()
+    tk.Label(root, text="PWM Duty cycle %").pack()
     dc_entry = tk.Entry(root)
     dc_entry.pack()
-    dc_1 = dc_entry.get()
 
+    #dc_entry = tk.Scale(root, from_=0, to=100, resolution=1, orient='horizontal')
+    #dc_entry.pack()
+
+
+    freq_entry = tk.Scale(root, from_=0.1, to=9.9, resolution=0.1, digits=2, orient='horizontal')
+    freq_entry.pack()
+    tk.Label(root, text="PWM Frequency").pack()
+
+    #tk.Label(root, text="PWM Frequency").pack()
+    #freq_entry = tk.Entry(root)
+    #freq_entry.pack()
 
     button_pwm = tk.Button(root,text='Modify PWM', width=25, command=modify_pwm)
     button_pwm.pack()
