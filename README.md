@@ -6,5 +6,8 @@ Pulse Width Modulation value can be changed using two parameters.
 
 Markup : 1. Frequency defines how many signal cycles per second.
          2. Duty cycle value defines how long the motor will rotate for a complete cycle of signal.
+
+Markup : 1. Ferefdsdsd.
+         2. dfdfd
          
 ![alt text](https://raw.githubusercontent.com/hossain-bd/motor_using_RaspberryPi/master/images/pwm-duty-cycle.jpg)
